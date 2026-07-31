@@ -1,0 +1,76 @@
+#!/bin/bash
+# md5 list 
+
+__tmp_fn='/tmp/.md5l.tmp.'$(uuidgen)
+__tmp_err_fn='/tmp/.md5l.err.'$(uuidgen)
+__err_fn='.md5.err'
+
+pass_by() {
+	rm "$__tmp_fn"
+	printf "\033[2K\r"
+}
+say_err() {
+	if [ -s "$__tmp_err_fn" ]; then
+		echo "$1" >>"$__err_fn"
+		pwd >&2
+		cat "$__tmp_err_fn" > >(tee -a "$__err_fn" >&2)
+	fi
+	rm "$__tmp_err_fn"
+}
+cleanup() {
+	# remove zero size backups
+	find . -name ".md5.*~" -size 0 -delete
+	# remove same backups
+	declare -A __tmp_arr
+	for __fn in `ls -t .md5* 2>/dev/null`; do
+		read cksm _ < <(md5sum "$__fn")
+		if ((__tmp_arr[$cksm]++)); then 
+			[ "$__fn" = '.md5' ] || [ "$__fn" = '.md5.err' ] && continue
+			rm "$__fn"
+	  fi
+	done
+}
+
+if [ -z "$1" ]; then set -- "."; fi
+for __param in "$@"
+do
+	printf "%s" "$__param"
+	cd "$__param"
+	[ -f .md5.err ] && mv .md5.err .md5.err.bkp_"$(stat -c %Y .md5.err)"-"$(date +%s)"~
+	# for __name in *
+	while IFS= read -r __name
+	do
+		if [ ! "$__name" = '*' ] \
+			&& [ -f "$__name" ]
+		then
+			# echo "$__name" >> "$__tmp_fn"
+			md5sum -b -- "$__name" | tr '*' ' ' 2>"$__tmp_err_fn"
+			# checksums on digital preservation: the binary mode is the standard.
+			
+			[ -f "$__tmp_err_fn" ] \
+				&& say_err "$__name" 
+		fi
+	# done \
+	done < <( ls -1 | sort | uniq ) \
+	| LC_ALL=C sort > "$__tmp_fn"
+	if [ -s "$__tmp_fn" ]
+	then
+		if [ -f .md5 ] 
+		then 
+			__diff="$( diff .md5 "$__tmp_fn" )"
+			if [ -z "$__diff" ]
+			then
+				pass_by
+			else
+				mv .md5 .md5.bkp_"$(stat -c %Y .md5)"-"$(date +%s)"~ \
+				&& mv "$__tmp_fn" .md5
+			fi
+		else
+			mv "$__tmp_fn" .md5
+			echo
+		fi
+	else
+		pass_by
+	fi
+	cleanup
+done
