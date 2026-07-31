@@ -1,0 +1,10 @@
+#!/bin/bash
+# md5list recursive
+# depend on 'md5l'
+
+if [ -z "$1" ]; then set -- "."; fi
+for __param in "$@"
+do
+	find "$(readlink -e "$__param")" -type d -exec md5l {} \;
+done
+
