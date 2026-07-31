@@ -9,6 +9,8 @@ The generated manifests are compatible with the output of `md5sum` (except the o
 
 Unlike a one-shot `md5sum` invocation, these utilities are designed to maintain manifests over time.
 
+Run them whenever a directory's state might have changed.
+
 ## Features
 * Generate `.md5` manifests for one or more directories.
 * Recursively process directory trees.
@@ -25,7 +27,7 @@ Just copy `md5l` and `md5lr` somewhere in your `PATH`.
 
 ## Typical workflow
 
-After modifying files, run `md5l` or `md5lr`.
+After copying a directory or modifying its contents, run `md5l` or `md5lr`.
 
 If a manifest changes, the previous version is preserved as `.md5.bkp_<mdate-orig>-<mdate-last>~`, allowing you to inspect what changed. All backup files end with `~`, so they can be found easily:
 
