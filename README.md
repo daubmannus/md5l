@@ -1,5 +1,5 @@
 # md5l
-Small shell utilities for generating and maintaining `.md5` manifest files.
+Small shell utilities for generating and maintaining `.md5` manifest files for tracking changes and verifying directory tree integrity.
 
 `md5l` creates or updates the manifest for one or more directories.
 
