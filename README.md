@@ -26,7 +26,7 @@ If a manifest changes, the previous version is preserved as `.md5~`, allowing yo
 
 Comparing the old and new manifests with `diff` or `vimdiff` shows exactly which files were added, removed, renamed, or modified. Since entries are sorted by checksum rather than filename, file renames are easy to recognize.
 
-Don't forget to remove unnecessary `.md5.*~` backups.
+Removing unnecessary `.md5.*~` backups.
 
 ## Status
 
