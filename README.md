@@ -1,7 +1,7 @@
 # md5l
-Small shell utilities for generating and maintaining `.md5` manifest files for tracking changes and verifying directory tree integrity.
+Small shell utilities for generating and maintaining `.md5` checksum manifest files for tracking changes and verifying directory tree integrity.
 
-`md5l` creates or updates the manifest for one or more directories.
+`md5l` creates or updates the manifest for one or more directories (non-recursively).
 
 `md5lr` recursively traverses directory trees and invokes `md5l` for each directory.
 
@@ -19,6 +19,10 @@ Unlike a one-shot `md5sum` invocation, these utilities are designed to maintain 
 * Use only plain text files - no database or external services.
 * Small shell scripts following the UNIX philosophy.
 
+## Installation
+
+Just copy `md5l` and `md5lr` somewhere in your `PATH`.
+
 ## Typical workflow
 
 After modifying files, run `md5l` or `md5lr`.
@@ -29,6 +33,15 @@ If a manifest changes, the previous version is preserved as `.md5.bkp_<mdate-ori
 
 Comparing the old and new manifests with `diff` or `vimdiff` shows exactly which files were added, removed, renamed, or modified. Since entries are sorted by checksum rather than filename, file renames are easy to recognize. Once you're done reviewing, clean up old `.md5.*~` backups.
 
+## Requirements
+
+- POSIX shell
+- `md5sum`
+
 ## Status
 
-These utilities were developed for personal use and have been used in daily workflows for years. They are published because they may be useful to others who maintain collections of files together with checksum manifests.
+These utilities were developed for personal use and have been used in daily workflows for years. They are published in the hope that they may be useful to others who maintain checksum manifests for collections of files.
+
+## License
+
+MIT License.
