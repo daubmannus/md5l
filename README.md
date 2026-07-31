@@ -42,7 +42,7 @@ Comparing the old and new manifests with `diff` or `vimdiff` shows exactly which
 
 ## Status
 
-These utilities were developed for personal use and have been used in daily workflows for years. They are published in the hope that they may be useful to others who maintain checksum manifests for collections of files.
+These utilities were developed for personal use and have been used in daily workflows for years. They are published in the hope that they may be useful to others.
 
 ## License
 
