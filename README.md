@@ -1,13 +1,13 @@
 # md5l
-Small shell utilities for generating and maintaining .md5 manifest files.
+Small shell utilities for generating and maintaining `.md5` manifest files.
 
-md5l creates or updates the manifest for one or more directories.
+`md5l` creates or updates the manifest for one or more directories.
 
-md5lr recursively traverses directory trees and invokes md5l for each directory.
+`md5lr` recursively traverses directory trees and invokes `md5l` for each directory.
 
 The generated manifests are compatible with the output of `md5sum` (except the optional `*` marker is omitted).
 
-Unlike a one-shot md5sum invocation, these utilities are designed to maintain manifests over time.
+Unlike a one-shot `md5sum` invocation, these utilities are designed to maintain manifests over time.
 
 ## Features
 * Generate `.md5` manifests for one or more directories.
